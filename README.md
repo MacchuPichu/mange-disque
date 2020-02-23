@@ -15,48 +15,78 @@ Récupérer l'adresse IP.
 On peux se débrancher de l'écran, du clavier/souris et se connecter avec VNC
 
 ## Installation de samba
-	sudo apt-get install samba samba-common-bin -y
-Répondre par oui pour toutes les questions
 	
-	sudo smbpasswd -a pi
+```bash
+sudo apt-get install samba samba-common-bin -y
+```
 
+Répondre par oui pour toutes les questions
+```bash
+sudo smbpasswd -a pi
+```
 Modifier le ficheri smb.conf
-	sudo nano /etc/samba/smb.conf
+```bash
+sudo nano /etc/samba/smb.conf
+```
 Pour donner accès au répertoire user :
-	Sous ####### Authentication #######
+Sous ####### Authentication #######
 Ajouter: 
-	security = user
+```bash
+security = user
+```
 
 Sous #######  Share Definitions ####### 
 Modifier: 
-	read only = no
-	
+```bash
+read only = yes --> read only = no
+```
+
 Redémarrer le service SAMBA
-	sudo service smbd restart
-	
-	Tester de se connecter depuis un windows
+```bash
+sudo service smbd restart
+```
+Tester de se connecter depuis un windows
 	
 ## Installation de audacious
-	sudo apt-get install audacious -y
+```bash
+sudo apt-get install audacious -y
+```
+
 
 ## Installation de pico TTS
-	wget http://ftp.us.debian.org/debian/pool/non-free/s/svox/libttspico0_1.0+git20130326-9_armhf.deb
-	wget http://ftp.us.debian.org/debian/pool/non-free/s/svox/libttspico-utils_1.0+git20130326-9_armhf.deb
-	sudo apt-get install -f ./libttspico0_1.0+git20130326-9_armhf.deb ./libttspico-utils_1.0+git20130326-9_armhf.deb -y
+```bash
+wget http://ftp.us.debian.org/debian/pool/non-free/s/svox/libttspico0_1.0+git20130326-9_armhf.deb
+wget http://ftp.us.debian.org/debian/pool/non-free/s/svox/libttspico-utils_1.0+git20130326-9_armhf.deb
+sudo apt-get install -f ./libttspico0_1.0+git20130326-9_armhf.deb ./libttspico-utils_1.0+git20130326-9_armhf.deb -y
+```
 
 ## Installation xdotool :  clavier en ligne de commande
-	sudo apt-get install xdotool -y
+```bash
+sudo apt-get install xdotool -y
+```
+
 
 ## Brancher la carte NFC et les boutons
 
 ## Récupération du code source
-	git clone https://github.com/MacchuPichu/mange-disque.git /home/pi/Music/mange-disque
+```bash
+git clone https://github.com/MacchuPichu/mange-disque.git /home/pi/Music/mange-disque
+```
+	
 
 ## Lancer le script au démarrage en mode LXDE
 Rendre le script executable : 
-	sudo chmod +x /home/pi/Music/mange-disque/mange-disque.py
+```bash
+sudo chmod +x /home/pi/Music/mange-disque/mange-disque.py
+```
+	
 
 Ajouter la commande de lancement dans autostart
-	sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+```bash
+sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+```
 A la fin ajouter: 
+```bash
 @lxterminal -e /usr/bin/python3 /home/pi/Music/mange-disque/mange-disque.py
+```
+
