@@ -49,4 +49,7 @@ Redémarrer le service SAMBA
 
 ## Brancher la carte NFC et les boutons
 
+## Récupération du code source
+	git clone https://github.com/MacchuPichu/mange-disque.git /home/pi/Music/mange-disque
+
 
