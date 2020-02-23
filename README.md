@@ -52,4 +52,11 @@ Redémarrer le service SAMBA
 ## Récupération du code source
 	git clone https://github.com/MacchuPichu/mange-disque.git /home/pi/Music/mange-disque
 
+## Lancer le script au démarrage en mode LXDE
+Rendre le script executable : 
+	sudo chmod +x /home/pi/Music/mange-disque/mange-disque.py
 
+Ajouter la commande de lancement dans autostart
+	sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+A la fin ajouter: 
+@lxterminal -e /usr/bin/python3 /home/pi/Music/mange-disque/mange-disque.py
