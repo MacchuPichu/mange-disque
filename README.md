@@ -90,9 +90,3 @@ A la fin ajouter:
 @lxterminal -e /usr/bin/python3 /home/pi/Music/mange-disque/mange-disque.py
 ```
 
-
-Ajouter les outils Bluetooth
-```bash
-sudo apt-get install blueman pulseaudio pavucontrol pulseaudio-module-bluetooth
-```
-
