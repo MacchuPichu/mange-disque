@@ -19,6 +19,8 @@ stop_lecture = False
 rc522 = RFID() 
 
 #Definition des pins
+pin31 = 31 #(GPIO.BCM = 06)
+pin32 = 32 #(GPIO.BCM = 12)
 pin33 = 33 #(GPIO.BCM = 13)
 pin35 = 35 #(GPIO.BCM = 19)
 pin36 = 36 #(GPIO.BCM = 16)
@@ -26,6 +28,8 @@ pin37 = 37 #(GPIO.BCM = 26)
 pin38 = 38 #(GPIO.BCM = 20)
 pin40 = 40 #(GPIO.BCM = 21)
 #GPIO.setmode(GPIO.BCM)
+GPIO.setup(pin31, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.setup(pin32, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 GPIO.setup(pin33, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 GPIO.setup(pin35, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 GPIO.setup(pin36, GPIO.IN, pull_up_down = GPIO.PUD_UP)
@@ -73,7 +77,7 @@ class Chansons(threading.Thread):
 def main():
 
     logs("Démarrage script")
-    volume() 
+    volume_default() 
     speech(music_folder, "Bonjour, choisissez ce que vous voulez écoutez !", True)
     #speech(music_folder, "Paul, Attention, derrière toi !", True)
 
@@ -100,7 +104,11 @@ def scutation_nfc():
 
 def scutation_commande():
     global stop_lecture
-
+    
+    if GPIO.input(pin31) == 0:
+        volume(False)
+    if GPIO.input(pin32) == 0:
+        volume(True)
     if GPIO.input(pin33) == 0:
         logs("Arrêt du système")
         os.system("killall " + lecteur_audio[0])
@@ -180,7 +188,22 @@ def speech(repertoire, text, play_wav):
 def logs(texte):
     print("["+str(datetime.datetime.now())+"] - " + texte)
 
-def volume():
+def volume(up):
+    process = os.popen('amixer sget "PCM" | grep "Mono:"')
+    result = process.read()
+    x = result.split(" ")
+    process.close()
+    volume = int(x[5][1:len(x[5])-2])
+    if up and volume<100:
+        new_volume = volume+1
+        print("Augmentation de "+ str(volume) + "% vers " + str(new_volume) + "%")
+        os.system("amixer sset 'PCM' "+str(new_volume)+"%")
+    elif not up and volume>0:
+        new_volume = volume-1
+        print("Diminution de "+ str(volume) + "% vers " + str(new_volume) + "%")
+        os.system("amixer sset 'PCM' "+str(new_volume)+"%")
+    
+def volume_default():
     logs("Réglage du volume à 64%")
     os.system("amixer sset 'PCM' 89%")  
 
