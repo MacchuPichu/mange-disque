@@ -181,7 +181,7 @@ def logs(texte):
     print("["+str(datetime.datetime.now())+"] - " + texte)
 
 def volume():
-    logs("Réglage du volume à 70%")
-    os.system("amixer sset 'PCM' 91%")  
+    logs("Réglage du volume à 64%")
+    os.system("amixer sset 'PCM' 89%")  
 
 main()
