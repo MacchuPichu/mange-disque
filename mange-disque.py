@@ -12,6 +12,9 @@ from rc522 import RFID
 # UID en cours de lecture
 uid_en_cours = "START_STOPPED"
 
+# Volume par défaut
+volume_au_demarrage = 40
+
 # Stopper la lecture
 stop_lecture = False
 
@@ -204,7 +207,6 @@ def volume(up):
         os.system("amixer sset 'PCM' "+str(new_volume)+"%")
     
 def volume_default():
-    logs("Réglage du volume à 64%")
-    os.system("amixer sset 'PCM' 89%")  
+    os.system("amixer sset 'PCM' "+volume_au_demarrage+"%")  
 
 main()
