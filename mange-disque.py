@@ -13,7 +13,7 @@ from rc522 import RFID
 uid_en_cours = "START_STOPPED"
 
 # Volume par défaut
-volume_au_demarrage = 75
+volume_au_demarrage = 80
 
 # Stopper la lecture
 stop_lecture = False
@@ -89,14 +89,13 @@ def main():
 
 def scutation_nfc():
     global uid_en_cours
-    
     # Démarrage
     if uid_en_cours == "START_STOPPED" :
         Chansons(uid_en_cours).start()
         uid_en_cours = ""
         
     # Attente de détection d'uncode NFC
-    uid = lecture_nfc(None)
+    uid = lecture_nfc(5)
     if not uid == "" and not uid == uid_en_cours:
         uid_en_cours = uid
         logs("Carte NFC détectée. UID : " + uid)
@@ -139,6 +138,7 @@ def scutation_commande():
     time.sleep(0.2)
 
 def lecture_nfc(timeout):
+    
     uid = ""
     if timeout is None:
         rc522.wait_for_tag()
